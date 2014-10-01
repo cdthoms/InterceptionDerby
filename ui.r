@@ -35,11 +35,15 @@ shinyUI(navbarPage(title = 'INT Derby',
                    
                    ### Include a list of current interception totals for QBs as well as Defenses
                    navbarMenu('Research',
-                              tabPanel('QB INT Standings'),
-                              tabPanel('Defensive INT Standings')),
+                              tabPanel('QB INT Standings',
+                                       HTML('<h3>QB Int Rates</h3>'),
+                                       dataTableOutput('qbintrate')),
+                              tabPanel('Defensive INT Standings',
+                                       HTML('<h3>Team Int Rates</h3>'),
+                                       dataTableOutput('teamintrate'))),
                    
                    
                    ### Results graphs, standings
                    tabPanel('Standings')
-                         
+                   
 ))
