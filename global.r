@@ -9,7 +9,7 @@ library(mailR)
 require(shinysky)
 
 # setwd('/Users/Chris/Documents/Personal/Old Computer/Chris Documents/Derby')
-setwed('./Derby')
+setwd('./Derby')
 
 qb_int_url = 'http://www.sportingcharts.com/nfl/stats/quarterback-interception-rates/2014/'
 qb_int_list = readHTMLTable(qb_int_url,stringsAsFactors=F)
