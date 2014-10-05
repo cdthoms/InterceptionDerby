@@ -7,6 +7,7 @@ library(markdown)
 library(RNeo4j)
 library(mailR)
 require(shinysky)
+suppressPackageStartupMessages(library(googleVis))
 
 # setwd('/Users/Chris/Documents/Personal/Old Computer/Chris Documents/Derby')
 # setwd('~/InterceptionDerby')
@@ -40,6 +41,42 @@ myCsv = getURL('https://docs.google.com/spreadsheet/pub?key=0Akv8ehIfGJVKdGx3NXd
                ssl.verifypeer=F,useragent='R')
 info = read.csv(textConnection(myCsv),stringsAsFactors=F)
 info = info[!is.na(info$week),]
+
+derby = info
+
+derby = derby[derby$name!='',c(1:7)]
+names(derby) = c('Week','Person','pickorder','qb1','int.qb1','qb2','int.qb2')
+derby$weeklytotal = as.numeric(derby$int.qb1)+as.numeric(derby$int.qb2)
+person.total = aggregate(derby$weeklytotal,by=list(Person=derby$Person),sum,na.rm=T)
+names(person.total) = c('Person','TotalINT')
+person.total=person.total[order(person.total$TotalINT,decreasing=T),]
+qb1 = derby[,c('Week','Person','qb1','int.qb1','pickorder')]
+qb2 = derby[,c('Week','Person','qb2','int.qb2','pickorder')]
+names(qb1) = names(qb2) = c('Week','Person','qb','int','pickorder')
+qb = rbind(qb1,qb2)
+qb = qb[!(is.na(qb$int)),]
+qb.total = aggregate(qb$int,by=list(QB=qb$qb),sum)
+names(qb.total) = c('QB','Int')
+qb.playertotal = aggregate(qb$int,by=list(qb$qb,qb$Person),sum)
+names(qb.playertotal)=c('QB','Person','Int')
+
+PlayerQBPlot = dcast(qb.playertotal,QB~Person)
+
+barchart = gvisColumnChart(PlayerQBPlot,options=list(vAxis.slantedText=F,isStacked=T))
+cumulatives = c()
+peeps = unique(derby$Person)
+for (i in 1:4) {
+  weekly.person = derby[derby$Person==peeps[i],]
+  weekly.person$cumulative = cumsum(weekly.person$weeklytotal)
+  cumulatives = rbind(cumulatives,weekly.person)
+}
+
+weekly = dcast(cumulatives[,c('Week','Person','cumulative')],Week~Person)
+weeklytotals = gvisLineChart(weekly)
+
+interactive = gvisMerge(barchart,weeklytotals)
+
+
 
 graph = startGraph(url = 'http://derby.sb02.stations.graphenedb.com:24789/db/data/',
                    username = 'derby',

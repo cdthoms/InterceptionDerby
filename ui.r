@@ -44,6 +44,7 @@ shinyUI(navbarPage(title = 'INT Derby',
                    
                    
                    ### Results graphs, standings
-                   tabPanel('Standings')
+                   tabPanel('Standings',
+                            htmlOutput('standingsplot'))
                    
 ))

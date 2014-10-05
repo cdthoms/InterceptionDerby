@@ -24,6 +24,10 @@ shinyServer(function(input, output, session) {
     sched[sched$WEEK>=currentWeek,]
   })
   
+  output$standingsplot = renderGvis({
+    gvisMerge(barchart,weeklytotals)
+  })
+  
   output$qbchoice = renderUI({
     switch(input$name,
            CT = select2Input('qb',paste0('Hello ',
