@@ -62,7 +62,7 @@ names(qb.playertotal)=c('QB','Person','Int')
 
 PlayerQBPlot = dcast(qb.playertotal,QB~Person)
 
-barchart = gvisColumnChart(PlayerQBPlot,options=list(vAxis.slantedText=F,isStacked=T))
+barchart = gvisColumnChart(PlayerQBPlot,options=list(isStacked=T,hAxis='{slantedText:true,slantedTextAngle:90}',width=1500,height=750))
 cumulatives = c()
 peeps = unique(derby$Person)
 for (i in 1:4) {
@@ -72,11 +72,7 @@ for (i in 1:4) {
 }
 
 weekly = dcast(cumulatives[,c('Week','Person','cumulative')],Week~Person)
-weeklytotals = gvisLineChart(weekly)
-
-interactive = gvisMerge(barchart,weeklytotals)
-
-
+weeklytotals = gvisLineChart(weekly,options=list(width=1500,height=750))
 
 graph = startGraph(url = 'http://derby.sb02.stations.graphenedb.com:24789/db/data/',
                    username = 'derby',
