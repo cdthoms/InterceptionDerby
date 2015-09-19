@@ -30,7 +30,7 @@ shinyUI(navbarPage(title = 'INT Derby',
                    
                    ### Display the schedule
                    tabPanel('Schedule',
-                            HTML('<h3>2014 NFL Schedule</h3>'),
+                            HTML('<h3>NFL Schedule</h3>'),
                             dataTableOutput('schedule')),
                    
                    ### Include a list of current interception totals for QBs as well as Defenses

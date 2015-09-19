@@ -12,11 +12,14 @@ suppressPackageStartupMessages(library(googleVis))
 # setwd('/Users/Chris/Documents/Personal/Old Computer/Chris Documents/Derby')
 # setwd('~/InterceptionDerby')
 
-qb_int_url = 'http://www.sportingcharts.com/nfl/stats/quarterback-interception-rates/2014/'
+currentYear = 2015
+
+qb_int_url = paste0('http://www.sportingcharts.com/nfl/stats/quarterback-interception-rates/',currentYear,'/')
 qb_int_list = readHTMLTable(qb_int_url,stringsAsFactors=F)
 
-team_int_url = 'http://www.sportingcharts.com/nfl/stats/team-interception-rate/2014/'
+team_int_url = paste0('http://www.sportingcharts.com/nfl/stats/team-interception-rate/',currentYear,'/')
 team_int_list = readHTMLTable(team_int_url,stringsAsFactors=F)
+
 
 # qb_url = 'http://espn.go.com/nfl/players/_/position/qb'
 # qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
@@ -30,6 +33,7 @@ qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
 qbs = qb_list[[9]]
 qbs = qbs[-1,]
 firstlast = colsplit(qbs[,1]," ",c("first","last"))
+firstlast$first = substr(firstlast$first,3,100)
 qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
 
 sched = read.csv('nfl2014sched.csv',stringsAsFactors=F)

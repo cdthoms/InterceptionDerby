@@ -132,6 +132,7 @@ shinyServer(function(input, output, session) {
         createNode(graph,'Picks',
                    name = input$name,
                    week = currentWeek,
+                   year = currentYear,
                    time = as.character(submitTime),
                    pickOrder = info[info$week==currentWeek&info$name==input$name,'pickOrder'],
                    pick1 = pick1,
@@ -142,18 +143,18 @@ shinyServer(function(input, output, session) {
                    pick6 = pick6,
                    pick7 = pick7,
                    pick8 = pick8)
-        if (cypher(graph,paste('match (n:Picks {week:',currentWeek,'}) return count(distinct n.name)'))[1,1]==4) {
+        if (cypher(graph,paste('match (n:Picks {week:',currentWeek,',year:',currentYear,'}) return count(distinct n.name)'))[1,1]==4) {
           ### Take the most recent picks for each person
           ### query goes here (Still need to figure out the max submission)
           ### Return picks for player 1
           firstpicks = substring(cypher(graph,paste('match (n:Picks {week:',currentWeek,
-                                                    ',pickOrder:1}) return n.pick1,n.pick2'))[1,1:2],4)
+                                                    ',pickOrder:1,year:',currentYear,'}) return n.pick1,n.pick2'))[1,1:2],4)
           secondpicks = substring(cypher(graph,paste('match (n:Picks {week:',currentWeek,
-                                                     ',pickOrder:2}) return n.pick1,n.pick2,n.pick3,n.pick4'))[1,1:4],4)
+                                                     ',pickOrder:2,year:',currentYear,'}) return n.pick1,n.pick2,n.pick3,n.pick4'))[1,1:4],4)
           thirdpicks = substring(cypher(graph,paste('match (n:Picks {week:',currentWeek,
-                                                    ',pickOrder:3}) return n.pick1,n.pick2,n.pick3,n.pick4,n.pick5,n.pick6'))[1,1:6],4)
+                                                    ',pickOrder:3,year:',currentYear,'}) return n.pick1,n.pick2,n.pick3,n.pick4,n.pick5,n.pick6'))[1,1:6],4)
           fourthpicks = substring(cypher(graph,paste('match (n:Picks {week:',currentWeek,
-                                                     ',pickOrder:4}) return n.pick1,n.pick2,n.pick3,n.pick4,n.pick5,n.pick6,n.pick7,n.pick8'))[1,1:8],4)
+                                                     ',pickOrder:4,year:',currentYear,'}) return n.pick1,n.pick2,n.pick3,n.pick4,n.pick5,n.pick6,n.pick7,n.pick8'))[1,1:8],4)
           picks1 = firstpicks
           picks2 = secondpicks[!(secondpicks %in% firstpicks)][1:2]
           picks3v1 = thirdpicks[!(thirdpicks %in% picks1)]
