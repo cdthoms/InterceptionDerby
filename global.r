@@ -43,7 +43,7 @@ weeklyDate = aggregate(sched$DATE,list(week=sched$WEEK),max)
 
 currentWeek = min(which(weeklyDate$x>=Sys.Date()))
 
-myCsv = getURL('https://docs.google.com/spreadsheet/pub?key=0Akv8ehIfGJVKdGx3NXdib0p6Q01CSEZ4amY0RW53Ymc&single=true&gid=2&output=csv',
+myCsv = getURL('https://docs.google.com/spreadsheets/d/14SYT9um0pEzwgsVO66QFXFZe1EcPnLUzQZp9zj0mQZA/pub?gid=1006907194&single=true&output=csv',
                ssl.verifypeer=F,useragent='R')
 info = read.csv(textConnection(myCsv),stringsAsFactors=F)
 info = info[!is.na(info$week),]
