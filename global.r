@@ -36,7 +36,7 @@ firstlast = colsplit(qbs[,1]," ",c("first","last"))
 firstlast$first = substr(firstlast$first,3,100)
 qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
 
-sched = read.csv('nfl2014sched.csv',stringsAsFactors=F)
+sched = read.csv('2015nflsched.csv',stringsAsFactors=F)
 sched$DATE = as.Date(sched$DATE,format='%m/%d/%y')
 
 weeklyDate = aggregate(sched$DATE,list(week=sched$WEEK),max)
