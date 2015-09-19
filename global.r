@@ -33,7 +33,7 @@ qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
 qbs = qb_list[[9]]
 qbs = qbs[-1,]
 firstlast = colsplit(qbs[,1]," ",c("first","last"))
-firstlast$first = substr(firstlast$first,3,100)
+firstlast$first = substr(firstlast$first,2,100)
 qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
 
 sched = read.csv('2015nflsched.csv',stringsAsFactors=F)
