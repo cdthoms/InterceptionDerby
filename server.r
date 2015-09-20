@@ -1,6 +1,7 @@
 library(shiny)
 library(shinysky)
 library(ggplot2)
+library(mailR)
 
 shinyServer(function(input, output, session) {
   
