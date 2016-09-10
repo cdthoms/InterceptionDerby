@@ -6,13 +6,13 @@ library(XML)
 library(markdown)
 library(RNeo4j)
 library(mailR)
-# require(shinysky)
+require(shinysky)
 suppressPackageStartupMessages(library(googleVis))
 
 # setwd('/Users/Chris/Documents/Personal/Old Computer/Chris Documents/Derby')
-setwd('~/Documents/InterceptionDerby')
+# setwd('~/InterceptionDerby')
 
-currentYear = 2016
+currentYear = 2015
 
 qb_int_url = paste0('http://www.sportingcharts.com/nfl/stats/quarterback-interception-rates/',currentYear,'/')
 qb_int_list = readHTMLTable(qb_int_url,stringsAsFactors=F)
@@ -33,17 +33,17 @@ qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
 qbs = qb_list[[9]]
 qbs = qbs[-1,]
 firstlast = colsplit(qbs[,1]," ",c("first","last"))
-# firstlast$first = substr(firstlast$first,2,100)
+firstlast$first = substr(firstlast$first,3,100)
 qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
 
-sched = read.csv('2016nflsched.csv',stringsAsFactors=F)
+sched = read.csv('2015nflsched.csv',stringsAsFactors=F)
 sched$DATE = as.Date(sched$DATE,format='%m/%d/%y')
 
 weeklyDate = aggregate(sched$DATE,list(week=sched$WEEK),max)
 
 currentWeek = min(which(weeklyDate$x>=Sys.Date()))
 
-myCsv = getURL('https://docs.google.com/spreadsheets/d/14SYT9um0pEzwgsVO66QFXFZe1EcPnLUzQZp9zj0mQZA/pub?output=csv',
+myCsv = getURL('https://docs.google.com/spreadsheets/d/14SYT9um0pEzwgsVO66QFXFZe1EcPnLUzQZp9zj0mQZA/pub?gid=1006907194&single=true&output=csv',
                ssl.verifypeer=F,useragent='R')
 info = read.csv(textConnection(myCsv),stringsAsFactors=F)
 info = info[!is.na(info$week),]

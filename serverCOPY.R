@@ -1,7 +1,6 @@
 library(shiny)
-# library(shinysky)
+library(shinysky)
 library(ggplot2)
-library(mailR)
 
 shinyServer(function(input, output, session) {
   
@@ -33,9 +32,13 @@ shinyServer(function(input, output, session) {
     return(weeklytotals)
   })
   
+#   output$standingsplot = renderGvis({
+#     return(gvisMerge(barchart,weeklytotals))
+#   })
+  
   output$qbchoice = renderUI({
     switch(input$name,
-           CT = selectInput('qb',paste0('Hello ',
+           CT = select2Input('qb',paste0('Hello ',
                                          input$name,
                                          '. Please make your week ',
                                          currentWeek,
@@ -46,9 +49,8 @@ shinyServer(function(input, output, session) {
                                          ' QBs in ranked order. ',
                                          'Last week you selected ',info[info$week==currentWeek-1&info$name=='CT',4],' and ',
                                          info[info$week==currentWeek-1&info$name=='CT',6],'. Exclude them from your selections.'),
-                             choices = qbframe$Name,
-                            multiple=T),
-           Mike = selectInput('qb',paste0('Hello ',
+                             choices = qbframe$Name),
+           Mike = select2Input('qb',paste0('Hello ',
                                            input$name,
                                            '. Please make your week ',
                                            currentWeek,
@@ -59,9 +61,8 @@ shinyServer(function(input, output, session) {
                                            ' QBs in ranked order. ',
                                            'Last week you selected ',info[info$week==currentWeek-1&info$name=='Mike',4],' and ',
                                            info[info$week==currentWeek-1&info$name=='Mike',6],'. Exclude them from your selections.'),
-                               choices = qbframe$Name,
-                              multiple=T),
-           Dangerous = selectInput('qb',paste0('Hello ',
+                               choices = qbframe$Name),
+           Dangerous = select2Input('qb',paste0('Hello ',
                                                 input$name,
                                                 '. Please make your week ',
                                                 currentWeek,
@@ -72,9 +73,8 @@ shinyServer(function(input, output, session) {
                                                 ' QBs in ranked order. ',
                                                 'Last week you selected ',info[info$week==currentWeek-1&info$name=='Dangerous',4],' and ',
                                                 info[info$week==currentWeek-1&info$name=='Dangerous',6],'. Exclude them from your selections.'),
-                                    choices = qbframe$Name,
-                                   multiple=T),
-           Burson = selectInput('qb',paste0('Hello ',
+                                    choices = qbframe$Name),
+           Burson = select2Input('qb',paste0('Hello ',
                                              input$name,
                                              '. Please make your week ',
                                              currentWeek,
@@ -85,8 +85,7 @@ shinyServer(function(input, output, session) {
                                              ' QBs in ranked order. ',
                                              'Last week you selected ',info[info$week==currentWeek-1&info$name=='Burson',4],' and ',
                                              info[info$week==currentWeek-1&info$name=='Burson',6],'. Exclude them from your selections.'),
-                                 choices = qbframe$Name,
-                                multiple=T))
+                                 choices = qbframe$Name))
     
   })
   

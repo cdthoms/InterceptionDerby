@@ -1,12 +1,12 @@
 library(shiny)
-# library(shinysky)
+library(shinysky)
 library(ggplot2)
 library(markdown)
 
 shinyUI(navbarPage(title = 'INT Derby',
                    
                    theme = 'bootstrap.css',
-                   collapsible = TRUE,
+                   collapsable = TRUE,
                    
                    ###
                    ### Tab - Picks

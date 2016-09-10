@@ -1,0 +1,6 @@
+name: InterceptionDerby
+account: cthoms
+bundleId: 78419
+url:
+     http://cthoms.shinyapps.io/InterceptionDerby
+server: shinyapps.io
