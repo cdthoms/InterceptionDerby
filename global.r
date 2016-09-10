@@ -20,20 +20,11 @@ qb_int_list = readHTMLTable(qb_int_url,stringsAsFactors=F)
 team_int_url = paste0('http://www.sportingcharts.com/nfl/stats/team-interception-rate/',currentYear,'/')
 team_int_list = readHTMLTable(team_int_url,stringsAsFactors=F)
 
-
-# qb_url = 'http://espn.go.com/nfl/players/_/position/qb'
-# qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
-# qbframe = qb_list[[1]]
-# qbframe = qbframe[,c(1:2)]
-# names(qbframe) = c('Name','Team')
-# qbframe = qbframe[grep(',',qbframe$Name),]
-
 qb_url = 'http://sports.yahoo.com/nfl/players?type=position&c=NFL&pos=QB'
 qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
 qbs = qb_list[[9]]
 qbs = qbs[-1,]
 firstlast = colsplit(qbs[,1]," ",c("first","last"))
-# firstlast$first = substr(firstlast$first,2,100)
 qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
 
 sched = read.csv('2016nflsched.csv',stringsAsFactors=F)
