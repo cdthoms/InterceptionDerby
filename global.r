@@ -10,7 +10,7 @@ library(mailR)
 suppressPackageStartupMessages(library(googleVis))
 
 # setwd('/Users/Chris/Documents/Personal/Old Computer/Chris Documents/Derby')
-setwd('~/Documents/InterceptionDerby')
+# setwd('~/Documents/InterceptionDerby')
 
 currentYear = 2016
 
