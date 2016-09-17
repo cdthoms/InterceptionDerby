@@ -6,6 +6,8 @@ library(XML)
 library(markdown)
 library(RNeo4j)
 library(mailR)
+library(bitops)
+library(jsonlite)
 # require(shinysky)
 suppressPackageStartupMessages(library(googleVis))
 
@@ -25,7 +27,7 @@ qb_list = readHTMLTable(qb_url,stringsAsFactors=F)
 qbs = qb_list[[9]]
 qbs = qbs[-1,]
 firstlast = colsplit(qbs[,1]," ",c("first","last"))
-qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3])
+qbframe = data.frame(Name = paste0(firstlast$last,', ',firstlast$first),Team = qbs[,3],stringsAsFactors = F)
 
 sched = read.csv('2016nflsched.csv',stringsAsFactors=F)
 sched$DATE = as.Date(sched$DATE,format='%m/%d/%y')
